@@ -1,9 +1,6 @@
-dotnet-example
-==============
-
 ## Criando o projeto .Net
 
-A partir do terminal, vamos criar um novo diretório do projeto e inicializar um novo projeto C# webapi:
+A partir do terminal, vamos criar um novo diretório do projeto e inicializar um novo projeto C# `webapi`:
 
 ```
 $ mkdir dotnet-example
@@ -26,7 +23,7 @@ $ curl http://localhost:5000/api/values
 
 ## Adicionando SQL Server
 
-Agora é hora de adicionar um banco de dados. Graças a Docker e SQL Server para Linux, é super rápido e fácil de começar com isso. Do terminal, vamos baixar e executar uma nova instância do SQL Server como um recipiente Docker.
+Agora é hora de adicionar um banco de dados. Graças a `Docker` e SQL Server para Linux, é super rápido e fácil de começar com isso. Do terminal, vamos baixar e executar uma nova instância do SQL Server como um recipiente `Docker`.
 
 ```
 $ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=SqlExpress123' -p 1433:1433 --name sqlexpress -d microsoft/mssql-server-linux
@@ -34,7 +31,7 @@ $ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=SqlExpress123' -p 1433:1433 --na
 
 ## Adicionando Entity Framework ao projeto
 
-Utilizando o VsCode > View > Integrated Terminal você irá adicionar a package Microsoft SQL Server database provider for Entity Framework Core ao projeto
+Utilizando o VsCode > View > Integrated Terminal você irá adicionar a `package` Microsoft SQL Server database provider for Entity Framework Core ao projeto
 
 ```
 $ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 2.0.1
@@ -58,7 +55,7 @@ services.AddDbContext<ApiContext>(options => options.UseSqlServer(connString));
 
 ## Colocá-lo em Docker
 
-Agora que temos o nosso serviço, precisamos obtê-lo em Docker. O primeiro passo é criar um novo `Dockerfile` que diz Docker como construir o nosso serviço. Crie um arquivo na pasta raiz chamada `Dockerfile` e adicione o seguinte conteúdo:
+Agora que temos o nosso serviço, precisamos obtê-lo em `Docker`. O primeiro passo é criar um novo `Dockerfile` que diz `Docker` como construir o nosso serviço. Crie um arquivo na pasta raiz chamada `Dockerfile` e adicione o seguinte conteúdo:
 
 ```
 FROM microsoft/aspnetcore-build:2.0 AS build-env
