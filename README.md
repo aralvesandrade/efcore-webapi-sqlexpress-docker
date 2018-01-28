@@ -39,11 +39,125 @@ $ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 2.0.1
 
 ## Criando os arquivos
 
-Models/Product.cs
-Models/ApiContext.cs
-Controllers/ProductsController.cs
+Criar arquivo na pasta Models > Product.cs
 
-## Atualizar ConfigureServices
+```
+using System.ComponentModel.DataAnnotations;
+
+namespace dotnet_example.Models  
+{
+    public class Product
+    {
+        public int Id { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+    }
+}
+```
+
+Criar arquivo na pasta Models > ApiContext.cs
+
+```
+using Microsoft.EntityFrameworkCore;
+
+namespace dotnet_example.Models  
+{
+    public class ApiContext : DbContext
+    {
+        public ApiContext(DbContextOptions<ApiContext> options)
+            : base(options)
+        {
+            this.Database.EnsureCreated();
+        }
+
+        public DbSet<Product> Products { get; set; }
+    }
+}
+```
+
+Criar arquivo na pasta Controllers > ProductsController.cs
+
+```
+using System.Linq;  
+using Microsoft.AspNetCore.Mvc;
+using dotnet_example.Models;
+
+namespace dotnet_example.Controllers  
+{
+    [Route("api/[controller]")]
+    public class ProductsController : Controller
+    {
+        private readonly ApiContext _context;
+
+        public ProductsController(ApiContext context)
+        {
+            _context = context;
+        }
+
+        // GET api/values
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var model = _context.Products.ToList();
+
+            return Ok(new { Products = model });
+        }
+
+        [HttpPost]
+        public IActionResult Create([FromBody]Product model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            _context.Products.Add(model);
+            _context.SaveChanges();
+
+            return Ok(model);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody]Product model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var product = _context.Products.Find(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            product.Name = model.Name;
+            product.Price = model.Price;
+
+            _context.SaveChanges();
+
+            return Ok(product);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var product = _context.Products.Find(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            _context.Remove(product);
+            _context.SaveChanges();
+
+            return Ok(product);
+        }
+    }
+}
+```
+
+Atualizar arquivo ConfigureServices.cs
 
 ```
 var hostname = Environment.GetEnvironmentVariable("SQLSERVER_HOST") ?? "localhost";
