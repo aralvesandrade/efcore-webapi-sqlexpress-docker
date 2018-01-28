@@ -1,6 +1,6 @@
 ## Criando o projeto .Net
 
-A partir do terminal, vamos criar um novo diretório do projeto e inicializar um novo projeto C# `webapi`:
+A partir do terminal `Windows PowerShell` ou `Git Bash`, vamos criar um novo diretório do projeto e inicializar um novo projeto C# `webapi`:
 
 ```
 $ mkdir dotnet-example
@@ -37,7 +37,7 @@ Utilizando o VsCode > View > Integrated Terminal você irá adicionar a `package
 $ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 2.0.1
 ```
 
-## Criando os arquivos
+## Criando e alterando arquivos
 
 Criar arquivo na pasta Models > Product.cs
 
@@ -157,7 +157,7 @@ namespace dotnet_example.Controllers
 }
 ```
 
-Atualizar arquivo ConfigureServices.cs
+Atualizar `ConfigureServices` do arquivo Startup.cs
 
 ```
 var hostname = Environment.GetEnvironmentVariable("SQLSERVER_HOST") ?? "localhost";
