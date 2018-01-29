@@ -4,7 +4,7 @@ Precisa ter instalado os pacotes abaixo:
 
 - [Docker](https://store.docker.com/editions/community/docker-ce-desktop-windows)
 - [.NET Core 2.1.4 SDK](https://www.microsoft.com/net/download/thank-you/dotnet-sdk-2.1.4-windows-x64-installer)
-- [Visual Code](https://go.microsoft.com/fwlink/?Linkid=852157)
+- [Visual Studio Code](https://go.microsoft.com/fwlink/?Linkid=852157)
 
 ## Criando o projeto .Net
 
