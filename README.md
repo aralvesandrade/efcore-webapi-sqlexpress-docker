@@ -8,7 +8,7 @@ Precisa ter instalado os pacotes abaixo:
 
 ## Criando o projeto .Net
 
-A partir do terminal `Windows PowerShell` ou `Git Bash`, vamos criar um novo diretório do projeto e inicializar um novo projeto C# `webapi`:
+A partir do terminal `Windows PowerShell`, `Git Bash` ou próprio `Prompt de Commando` do `Windows`, vamos criar um novo diretório do projeto e inicializar um novo projeto C# `webapi`:
 
 ```
 $ mkdir dotnet-example
@@ -16,14 +16,14 @@ $ cd dotnet-example
 $ dotnet new webapi
 ```
 
-Em seguida, vamos restaurar e executar o nosso API:
+Em seguida, vamos restaurar e executar a nossa API:
 
 ```
 $ dotnet restore
 $ dotnet run
 ```
 
-E, finalmente, em uma segunda janela terminal, vamos testar a API com `curl`:
+E, finalmente, em uma segunda janela de terminal, vamos testar a API com `curl`:
 
 ```
 $ curl http://localhost:5000/api/values
@@ -31,13 +31,13 @@ $ curl http://localhost:5000/api/values
 
 ## Adicionando SQL Server
 
-Agora é hora de adicionar um banco de dados. Graças a `Docker` e SQL Server para Linux, é super rápido e fácil de começar com isso. Do terminal, vamos baixar e executar uma nova instância do SQL Server como um container `Docker`.
+Agora é hora de adicionar um banco de dados. Graças ao `Docker`, é super rápido e fácil de começar com isso. Do terminal, vamos baixar e executar uma nova instância do SQL Server para Linux como um novo container `Docker`.
 
 ```
 $ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=SqlExpress123' -p 1433:1433 --name sqlexpress -d microsoft/mssql-server-linux
 ```
 
-Verificar se o container `Docker` do SQL Server está no ar
+Verificar se o container `Docker` do SQL Server `sqlexpress` está no ar:
 
 ```
 $ docker ps -a
@@ -45,13 +45,13 @@ $ docker ps -a
 
 ## Adicionando Entity Framework ao projeto
 
-Abrir o Visual Code via prompt, digitar o comando de dentro da pasta do projeto `dotnet-example`
+Abrir o Visual Code via terminal, digitar de dentro da pasta do projeto `dotnet-example`
 
 ```
 $ code .
 ```
 
-Utilizando o VsCode > View > Integrated Terminal você irá adicionar a `package` Microsoft SQL Server database provider for Entity Framework Core ao projeto
+Utilizando o VsCode > View > Integrated Terminal você irá adicionar a `package` Microsoft SQL Server database provider for Entity Framework Core ao projeto:
 
 ```
 $ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 2.0.1
@@ -196,7 +196,7 @@ using Microsoft.EntityFrameworkCore;
 
 ## Colocá-lo em Docker
 
-Agora que temos o nosso serviço, precisamos obtê-lo em `Docker`. O primeiro passo é criar um novo `Dockerfile` que diz `Docker` como construir o nosso serviço. Crie um arquivo na pasta raiz chamada `Dockerfile` e adicione o seguinte conteúdo:
+Agora que temos o nosso aplicativo, precisamos obtê-lo em `Docker`. O primeiro passo é criar um novo `Dockerfile` que diz ao `Docker` como construir o nosso aplicativo. Crie um arquivo na pasta raiz chamada `Dockerfile` e adicione o seguinte conteúdo:
 
 ```
 FROM microsoft/aspnetcore-build AS build
@@ -217,13 +217,13 @@ COPY --from=build /app/out .
 ENTRYPOINT ["dotnet", "dotnet-example.dll"]
 ```
 
-Em seguida, é preciso compilar o nosso aplicativo e usar a saída para construir uma imagem Docker com a tag `dotnet-example`:
+Em seguida, é preciso compilar o nosso aplicativo:
 
 ```
 $ docker build -t dotnet-example .
 ```
 
-E, finalmente, podemos executar nosso novo recipiente, relacionando-a com o nosso recipiente SQL Server:
+E, finalmente, podemos executar nosso novo container `dotnet-example`, relacionando-a com o nosso container `sqlexpress`:
 
 ```
 $ docker run -it --rm -p 5000:80 --link sqlexpress -e SQLSERVER_HOST=sqlexpress dotnet-example
@@ -237,7 +237,7 @@ Vamos usar `curl` para postar alguns dados para nossa API:
 $ curl -i -H "Content-Type: application/json" -X POST -d '{"name": "6-Pack Beer", "price": "5.99"}' http://localhost:5000/api/products
 ```
 
-Se tudo correr bem, você deve ver uma resposta 200 status, e nosso novo produto retornados como JSON (com um banco de dados id gerado adequada).
+Se tudo correr bem, você deve ver uma resposta status 200, e nosso novo produto retornados como JSON.
 
 Em seguida, vamos modificar os nossos dados com um PUT e alterar o preço:
 
@@ -259,7 +259,7 @@ $ curl -i -X DELETE http://localhost:5000/api/products/1
 
 ## Conectando Sql Server
 
-Conectar no Sql Server via terminal:
+Conectar no `SQL Server` via terminal:
 
 ```
 $ docker exec -it sqlexpress /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P SqlExpress123
