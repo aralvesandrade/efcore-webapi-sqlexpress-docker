@@ -268,7 +268,7 @@ $ docker exec -it sqlexpress /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P S
 Exemplo de query:
 
 ```
-1> use dotnet_example;
+1> use dotnet_example
 2> select * from products
 3> go
 ```
