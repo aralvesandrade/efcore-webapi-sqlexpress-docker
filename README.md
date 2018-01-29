@@ -229,5 +229,3 @@ E, finalmente, podemos excluí-lo:
 ```
 $ curl -i -X DELETE http://localhost:5000/api/products/1
 ```
-
-Esse projeto foi atualizado para AspNetCore 2.0 do artigo original http://blog.kontena.io/dot-net-core-and-sql-server-in-docker/# dotnet-example
