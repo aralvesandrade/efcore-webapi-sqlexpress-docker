@@ -3,7 +3,7 @@
 Precisa ter instalado os pacotes abaixo:
 
 - [Docker](https://store.docker.com/editions/community/docker-ce-desktop-windows)
-- [.NET Core 2.0.3 SDK](https://www.microsoft.com/net/download/thank-you/dotnet-sdk-2.0.3-windows-x64-installer)
+- [.NET Core 2.1.4 SDK](https://www.microsoft.com/net/download/thank-you/dotnet-sdk-2.1.4-windows-x64-installer)
 - [Visual Code](https://go.microsoft.com/fwlink/?Linkid=852157)
 
 ## Criando o projeto .Net
@@ -16,7 +16,7 @@ $ cd dotnet-example
 $ dotnet new webapi
 ```
 
-Em seguida, vamos restaurar nossas dependências `NuGet` e executar o nosso API:
+Em seguida, vamos restaurar e executar o nosso API:
 
 ```
 $ dotnet restore
@@ -31,19 +31,13 @@ $ curl http://localhost:5000/api/values
 
 ## Adicionando SQL Server
 
-Agora é hora de adicionar um banco de dados. Graças a `Docker` e SQL Server para Linux, é super rápido e fácil de começar com isso. Do terminal, vamos baixar e executar uma nova instância do SQL Server como um recipiente `Docker`.
+Agora é hora de adicionar um banco de dados. Graças a `Docker` e SQL Server para Linux, é super rápido e fácil de começar com isso. Do terminal, vamos baixar e executar uma nova instância do SQL Server como um container `Docker`.
 
 ```
 $ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=SqlExpress123' -p 1433:1433 --name sqlexpress -d microsoft/mssql-server-linux
 ```
 
-ou
-
-```
-$ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=SqlExpress123' -e 'MSSQL_PID=Express' -p 1433:1433 -d microsoft/mssql-server-linux:latest
-```
-
-Verificar se o recipiente `Docker` do SQL Server está no ar
+Verificar se o container `Docker` do SQL Server está no ar
 
 ```
 $ docker ps -a
@@ -205,7 +199,7 @@ using Microsoft.EntityFrameworkCore;
 Agora que temos o nosso serviço, precisamos obtê-lo em `Docker`. O primeiro passo é criar um novo `Dockerfile` que diz `Docker` como construir o nosso serviço. Crie um arquivo na pasta raiz chamada `Dockerfile` e adicione o seguinte conteúdo:
 
 ```
-FROM microsoft/aspnetcore-build:2.0 AS build-env
+FROM microsoft/aspnetcore-build AS build
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
@@ -217,9 +211,9 @@ COPY . ./
 RUN dotnet publish -c Release -o out
 
 # Build runtime image
-FROM microsoft/aspnetcore:2.0
+FROM microsoft/aspnetcore
 WORKDIR /app
-COPY --from=build-env /app/out .
+COPY --from=build /app/out .
 ENTRYPOINT ["dotnet", "dotnet-example.dll"]
 ```
 
@@ -261,4 +255,20 @@ E, finalmente, podemos excluí-lo:
 
 ```
 $ curl -i -X DELETE http://localhost:5000/api/products/1
+```
+
+## Conectando Sql Server
+
+Conectar no Sql Server via terminal:
+
+```
+$ docker exec -it sqlexpress /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P SqlExpress123
+```
+
+Exemplo de query:
+
+```
+1> use dotnet_example;
+2> select * from products
+3> go
 ```
