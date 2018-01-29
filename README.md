@@ -37,7 +37,25 @@ Agora é hora de adicionar um banco de dados. Graças a `Docker` e SQL Server pa
 $ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=SqlExpress123' -p 1433:1433 --name sqlexpress -d microsoft/mssql-server-linux
 ```
 
+ou
+
+```
+$ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=SqlExpress123' -e 'MSSQL_PID=Express' -p 1433:1433 -d microsoft/mssql-server-linux:latest
+```
+
+Verificar se o recipiente `Docker` do SQL Server está no ar
+
+```
+$ docker ps -a
+```
+
 ## Adicionando Entity Framework ao projeto
+
+Abrir o Visual Code via prompt, digitar o comando de dentro da pasta do projeto `dotnet-example`
+
+```
+$ code .
+```
 
 Utilizando o VsCode > View > Integrated Terminal você irá adicionar a `package` Microsoft SQL Server database provider for Entity Framework Core ao projeto
 
@@ -173,6 +191,13 @@ var password = Environment.GetEnvironmentVariable("SQLSERVER_SA_PASSWORD") ?? "S
 var connString = $"Data Source={hostname};Initial Catalog=dotnet_example;User ID=sa;Password={password};";
 
 services.AddDbContext<ApiContext>(options => options.UseSqlServer(connString));
+```
+
+Adicionar dependencias
+
+```
+using dotnet_example.Models;
+using Microsoft.EntityFrameworkCore;
 ```
 
 ## Colocá-lo em Docker
