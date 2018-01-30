@@ -8,7 +8,7 @@ Precisa ter instalado os pacotes abaixo:
 
 ## Criando o projeto .Net
 
-A partir do terminal `Windows PowerShell`, `Git Bash` ou próprio `Prompt de Commando` do `Windows`, vamos criar um novo diretório do projeto e inicializar um novo projeto C# `webapi`:
+A partir do terminal `Windows PowerShell`, `Git Bash` ou próprio `Prompt de Comando` do `Windows`, vamos criar um novo diretório do projeto e inicializar um novo projeto C# `webapi`:
 
 ```
 $ mkdir dotnet-example
@@ -45,13 +45,13 @@ $ docker ps -a
 
 ## Adicionando Entity Framework ao projeto
 
-Abrir o Visual Code via terminal, digitar de dentro da pasta do projeto `dotnet-example`
+Abrir o `Visual Studio Code` via terminal, digitar de dentro da pasta do projeto `dotnet-example`
 
 ```
 $ code .
 ```
 
-Utilizando o VsCode > View > Integrated Terminal você irá adicionar a `package` Microsoft SQL Server database provider for Entity Framework Core ao projeto:
+Acessando o Menu > View > Integrated Terminal você irá adicionar a `package` Microsoft SQL Server database provider for Entity Framework Core ao projeto:
 
 ```
 $ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 2.0.1
@@ -177,7 +177,7 @@ namespace dotnet_example.Controllers
 }
 ```
 
-Atualizar `ConfigureServices` do arquivo Startup.cs
+Atualizar método `ConfigureServices` do arquivo Startup.cs
 
 ```
 var hostname = Environment.GetEnvironmentVariable("SQLSERVER_HOST") ?? "localhost";
@@ -257,7 +257,7 @@ E, finalmente, podemos excluí-lo:
 $ curl -i -X DELETE http://localhost:5000/api/products/1
 ```
 
-## Conectando Sql Server
+## Conectando SQL Server
 
 Conectar no `SQL Server` via terminal:
 
