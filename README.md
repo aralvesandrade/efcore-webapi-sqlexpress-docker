@@ -34,7 +34,7 @@ $ curl http://localhost:5000/api/values
 Agora é hora de adicionar um banco de dados. Graças ao `Docker`, é super rápido e fácil de começar com isso. Do terminal, vamos baixar e executar uma nova instância do SQL Server para Linux como um novo container `Docker`.
 
 ```
-$ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=SqlExpress123' -p 1433:1433 --name sqlexpress -d microsoft/mssql-server-linux
+$ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=SqlExpress123' -e 'MSSQL_PID=Express' -p 1433:1433 --name sqlexpress -d microsoft/mssql-server-linux
 ```
 
 Verificar se o container `Docker` do SQL Server `sqlexpress` está no ar:
