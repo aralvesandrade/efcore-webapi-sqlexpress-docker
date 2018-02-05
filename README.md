@@ -11,22 +11,22 @@ Precisa ter instalado os pacotes abaixo:
 A partir do terminal `Windows PowerShell`, `Git Bash` ou próprio `Prompt de Comando` do `Windows`, vamos criar um novo diretório do projeto e inicializar um novo projeto C# `webapi`:
 
 ```
-$ mkdir dotnet-example
-$ cd dotnet-example
-$ dotnet new webapi
+mkdir dotnet-example
+cd dotnet-example
+dotnet new webapi
 ```
 
 Em seguida, vamos restaurar e executar a nossa API:
 
 ```
-$ dotnet restore
-$ dotnet run
+dotnet restore
+dotnet run
 ```
 
 E, finalmente, em uma segunda janela de terminal, vamos testar a API com `curl`:
 
 ```
-$ curl http://localhost:5000/api/values
+curl http://localhost:5000/api/values
 ```
 
 ## Adicionando SQL Server
@@ -34,13 +34,13 @@ $ curl http://localhost:5000/api/values
 Agora é hora de adicionar um banco de dados. Graças ao `Docker`, é super rápido e fácil de começar com isso. Do terminal, vamos baixar e executar uma nova instância do SQL Server para Linux como um novo container `Docker`.
 
 ```
-$ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=SqlExpress123' -e 'MSSQL_PID=Express' -p 1433:1433 --name sqlexpress -d microsoft/mssql-server-linux
+docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=SqlExpress123' -e 'MSSQL_PID=Express' -p 1433:1433 --name sqlexpress -d microsoft/mssql-server-linux
 ```
 
 Verificar se o container `Docker` do SQL Server `sqlexpress` está no ar:
 
 ```
-$ docker ps -a
+docker ps -a
 ```
 
 ## Adicionando Entity Framework ao projeto
@@ -48,13 +48,13 @@ $ docker ps -a
 Abrir o `Visual Studio Code` via terminal, digitar de dentro da pasta do projeto `dotnet-example`
 
 ```
-$ code .
+code .
 ```
 
 Acessando o Menu > View > Integrated Terminal você irá adicionar a `package` Microsoft SQL Server database provider for Entity Framework Core ao projeto:
 
 ```
-$ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 2.0.1
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 2.0.1
 ```
 
 ## Criando e alterando arquivos
@@ -220,13 +220,13 @@ ENTRYPOINT ["dotnet", "dotnet-example.dll"]
 Em seguida, é preciso compilar o nosso aplicativo:
 
 ```
-$ docker build -t dotnet-example .
+docker build -t dotnet-example .
 ```
 
 E, finalmente, podemos executar nosso novo container `dotnet-example`, relacionando-a com o nosso container `sqlexpress`:
 
 ```
-$ docker run -it --rm -p 5000:80 --link sqlexpress -e SQLSERVER_HOST=sqlexpress dotnet-example
+docker run -it --rm -p 5000:80 --link sqlexpress -e SQLSERVER_HOST=sqlexpress dotnet-example
 ```
 
 ## Testando a nossa API
@@ -234,7 +234,7 @@ $ docker run -it --rm -p 5000:80 --link sqlexpress -e SQLSERVER_HOST=sqlexpress 
 Vamos usar `curl` para postar alguns dados para nossa API:
 
 ```
-$ curl -i -H "Content-Type: application/json" -X POST -d '{"name": "6-Pack Beer", "price": "5.99"}' http://localhost:5000/api/products
+curl -i -H "Content-Type: application/json" -X POST -d '{"name": "6-Pack Beer", "price": "5.99"}' http://localhost:5000/api/products
 ```
 
 Se tudo correr bem, você deve ver uma resposta status 200, e nosso novo produto retornados como JSON.
@@ -242,19 +242,19 @@ Se tudo correr bem, você deve ver uma resposta status 200, e nosso novo produto
 Em seguida, vamos modificar os nossos dados com um PUT e alterar o preço:
 
 ```
-$ curl -i -H "Content-Type: application/json" -X PUT -d '{"name": "6-Pack Beer", "price": "7.99"}' http://localhost:5000/api/products/1
+curl -i -H "Content-Type: application/json" -X PUT -d '{"name": "6-Pack Beer", "price": "7.99"}' http://localhost:5000/api/products/1
 ```
 
 Claro, também podemos obter os nossos dados:
 
 ```
-$ curl -i http://localhost:5000/api/products
+curl -i http://localhost:5000/api/products
 ```
 
 E, finalmente, podemos excluí-lo:
 
 ```
-$ curl -i -X DELETE http://localhost:5000/api/products/1
+curl -i -X DELETE http://localhost:5000/api/products/1
 ```
 
 ## Conectando SQL Server
@@ -262,7 +262,7 @@ $ curl -i -X DELETE http://localhost:5000/api/products/1
 Conectar no `SQL Server` via terminal:
 
 ```
-$ docker exec -it sqlexpress /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P SqlExpress123
+docker exec -it sqlexpress /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P SqlExpress123
 ```
 
 Exemplo de query:
