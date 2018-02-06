@@ -61,7 +61,7 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 2.0.1
 
 Criar arquivo na pasta Models > Product.cs
 
-```
+```C#
 using System.ComponentModel.DataAnnotations;
 
 namespace dotnet_example.Models  
@@ -79,7 +79,7 @@ namespace dotnet_example.Models
 
 Criar arquivo na pasta Models > ApiContext.cs
 
-```
+```C#
 using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_example.Models  
@@ -99,7 +99,7 @@ namespace dotnet_example.Models
 
 Criar arquivo na pasta Controllers > ProductsController.cs
 
-```
+```C#
 using System.Linq;  
 using Microsoft.AspNetCore.Mvc;
 using dotnet_example.Models;
@@ -179,7 +179,7 @@ namespace dotnet_example.Controllers
 
 Atualizar método `ConfigureServices` do arquivo Startup.cs
 
-```
+```C#
 var hostname = Environment.GetEnvironmentVariable("SQLSERVER_HOST") ?? "localhost";
 var password = Environment.GetEnvironmentVariable("SQLSERVER_SA_PASSWORD") ?? "SqlExpress123";
 var connString = $"Data Source={hostname};Initial Catalog=dotnet_example;User ID=sa;Password={password};";
@@ -189,7 +189,7 @@ services.AddDbContext<ApiContext>(options => options.UseSqlServer(connString));
 
 Adicionar dependencias
 
-```
+```C#
 using dotnet_example.Models;
 using Microsoft.EntityFrameworkCore;
 ```
@@ -198,7 +198,7 @@ using Microsoft.EntityFrameworkCore;
 
 Agora que temos o nosso aplicativo, precisamos obtê-lo em `Docker`. O primeiro passo é criar um novo `Dockerfile` que diz ao `Docker` como construir o nosso aplicativo. Crie um arquivo na pasta raiz chamada `Dockerfile` e adicione o seguinte conteúdo:
 
-```
+```Dockerfile
 FROM microsoft/aspnetcore-build AS build
 WORKDIR /app
 
