@@ -240,7 +240,7 @@ docker run -it --rm -p 5000:80 --link sqlexpress -e SQLSERVER_HOST=sqlexpress --
 Vamos usar `curl` para postar alguns dados para nossa API:
 
 ```
-curl -i -H "Content-Type: application/json" -X POST -d '{"name": "6-Pack Beer", "price": "5.99"}' http://localhost:5000/api/products
+curl -i -H "Content-Type: application/json" -X POST -d '{"name": "Teste 123", "price": "5.99"}' http://localhost:5000/api/products
 ```
 
 Se tudo correr bem, você deve ver uma resposta status 200, e nosso novo produto retornados como JSON.
@@ -248,7 +248,7 @@ Se tudo correr bem, você deve ver uma resposta status 200, e nosso novo produto
 Em seguida, vamos modificar os nossos dados com um PUT e alterar o preço:
 
 ```
-curl -i -H "Content-Type: application/json" -X PUT -d '{"name": "6-Pack Beer", "price": "7.99"}' http://localhost:5000/api/products/1
+curl -i -H "Content-Type: application/json" -X PUT -d '{"name": "Teste", "price": "7.99"}' http://localhost:5000/api/products/1
 ```
 
 Claro, também podemos obter os nossos dados:
