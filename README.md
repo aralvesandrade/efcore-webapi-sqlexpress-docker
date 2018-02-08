@@ -229,6 +229,12 @@ E, finalmente, podemos executar nosso novo container `dotnet-example`, relaciona
 docker run -it --rm -p 5000:80 --link sqlexpress -e SQLSERVER_HOST=sqlexpress dotnet-example
 ```
 
+ou
+
+```
+docker run -it --rm -p 5000:80 --link sqlexpress -e SQLSERVER_HOST=sqlexpress --name webapi-aspnetcore dotnet-example
+```
+
 ## Testando a nossa API
 
 Vamos usar `curl` para postar alguns dados para nossa API:
